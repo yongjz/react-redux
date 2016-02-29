@@ -58,11 +58,11 @@ module.exports = {
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     }),
     //压缩js文件
-    new uglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
+    // new uglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   }
+    // })
   ],
   devServer: {
     contentBase: './client',
