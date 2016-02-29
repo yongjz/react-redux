@@ -1,2 +1,2 @@
 # react-redux
-Practice react and redux
+Practice using react redux webpack...
