@@ -1,0 +1,4 @@
+var data = [
+  {"id": 1, "author": "Yongjz", "text": "This is `one` comment"},
+  {"id": 2, "author": "Jack", "text": "This is *another* comment"}
+];
