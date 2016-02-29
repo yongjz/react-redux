@@ -2,13 +2,39 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
+var webpack = require('webpack');
+var webpackMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var config = require('./webpack.config.js');
+
+const isDeveloping = process.env.NODE_ENV !== 'production';
 var app = express();
+
+const compiler = webpack(config);
+
+if (isDeveloping) {
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: '/',
+    contentBase: 'src',
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
+    }
+  });
+
+  app.use(middleware);
+  app.use(webpackHotMiddleware(compiler));
+}
 
 var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 
 app.set('port', (process.env.PORT || 3000));
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'client')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -49,7 +75,6 @@ app.post('/api/comments', function(req, res) {
     });
   });
 });
-
 
 app.listen(app.get('port'), function() {
   console.log('Server started: http://localhost:' + app.get('port') + '/');
