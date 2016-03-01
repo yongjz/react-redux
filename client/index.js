@@ -1,4 +1,8 @@
-require('./css/base.css');
+import ReactDOM from 'react-dom';
+import React from 'react';
+import marked from 'marked';
+import $ from 'jquery';
+import './css/base.css';
 
 var CommentBox = React.createClass({
 	loadCommentsFromServer: function() {
