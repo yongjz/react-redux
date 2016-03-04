@@ -3,5 +3,23 @@
         "id": 1453392598195,
         "author": "Yongjz",
         "text": "hello guys!"
+<<<<<<< Updated upstream
+=======
+    },
+    {
+        "id": 1453472315647,
+        "author": "asd",
+        "text": "asdasd"
+    },
+    {
+        "id": 1453473902982,
+        "author": "AAAAAA",
+        "text": "React is `great`!"
+    },
+    {
+        "id": 1457028911039,
+        "author": "123",
+        "text": "312"
+>>>>>>> Stashed changes
     }
 ]
