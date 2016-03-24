@@ -3,32 +3,38 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var webpack = require('webpack');
-var webpackMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
+// var webpackDevMiddleware = require('webpack-dev-middleware');
+// var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpackDevMiddleware = require('webpack-dev-middleware')
+var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.config.js');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 var app = express();
 
 const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+app.use(webpackHotMiddleware(compiler));
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + '/client/index.html')
+})
+// if (isDeveloping) {
+//   const middleware = webpackDevMiddleware(compiler, {
+//     publicPath: '/',
+//     contentBase: 'src',
+//     stats: {
+//       colors: true,
+//       hash: false,
+//       timings: true,
+//       chunks: false,
+//       chunkModules: false,
+//       modules: false
+//     }
+//   });
 
-if (isDeveloping) {
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: '/',
-    contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  });
-
-  app.use(middleware);
-  app.use(webpackHotMiddleware(compiler));
-}
+//   app.use(middleware);
+//   app.use(webpackHotMiddleware(compiler));
+// }
 
 var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 

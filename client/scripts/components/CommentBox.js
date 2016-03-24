@@ -24,19 +24,21 @@ var CommentBox = React.createClass({
 		var newComments = comments.concat([comment]);
 		this.setState({data: newComments});
 
+		this.props.addCommentClick(comment.id, comment.author, comment.text);
+
 		$.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-      	this.setState({data: comments});
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+	      url: this.props.url,
+	      dataType: 'json',
+	      type: 'POST',
+	      data: comment,
+	      success: function(data) {
+	        this.setState({data: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	      	this.setState({data: comments});
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+	    });
 	},
 
 	getInitialState: function() {
@@ -50,10 +52,10 @@ var CommentBox = React.createClass({
   render: function() {
     return (
         <div className="commentBox">
-	      	<h1>Comments</h1>
+	      	<h1>Commentsssss</h1>
 	      	<CommentList data={this.state.data} />
 	      	<CommentForm onCommentSubmit={this.handleCommentSubmit} />
-	      </div>
+	    </div>
     );
   }
 });

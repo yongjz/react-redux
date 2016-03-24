@@ -5,11 +5,11 @@ var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
   context: path.join(__dirname, './client'),
-  entry: {
-    jsx: './index.js',
-    html: './index.html',
-    vendor: ['react']
-  },
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    './index'
+  ],
   output: {
     path: path.join(__dirname, './static'),
     filename: 'bundle.js',
@@ -53,7 +53,9 @@ module.exports = {
     })
   ],
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    //new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     }),
@@ -63,9 +65,5 @@ module.exports = {
     //     warnings: false
     //   }
     // })
-  ],
-  devServer: {
-    contentBase: './client',
-    hot: true
-  }
+  ]
 }
